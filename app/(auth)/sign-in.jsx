@@ -14,7 +14,7 @@ const SignIn = () => {
   return (
     <SafeAreaView className="h-full">
       <ScrollView>
-        <View className="w-full h-full justify-center px-4 my-6">
+        <View className="w-full min-h-[85vh] justify-center px-4 my-6">
           <View className="w-full items-center">
             <Image 
               source={images.logo}
@@ -25,7 +25,7 @@ const SignIn = () => {
           <Text className="text-2xl text-secondary mt-10 font-psemibold">Log in to <Text className="text-primary">Present!</Text></Text>
           <View className="space-y-2 mt-7">
             <Text className="text-base text-secondary font-pmedium">RFID No.</Text>
-            <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-secondary items-center">
+            <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-primary items-center flex-row">
               <TextInput
                 value={rfidNo}
                 onChangeText={setRfidNo}
@@ -37,9 +37,9 @@ const SignIn = () => {
 
           <View className="space-y-2 mt-7">
             <Text className="text-base text-secondary font-pmedium">Password</Text>
-            <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-secondary items-center flex-row">
+            <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-primary items-center flex-row">
               <TextInput
-                placeholder="Enter text"
+                placeholder="Enter password"
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry={!showPassword}
