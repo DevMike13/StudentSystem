@@ -42,6 +42,12 @@ const RootLayout = () => {
             <Stack.Screen name='(auth)' options={{
                 headerShown: false
             }} />
+            <Stack.Screen name='(teacher)' options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name='(student)' options={{
+                headerShown: false
+            }} />
         </Stack>
     )
 }

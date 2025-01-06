@@ -1,15 +1,52 @@
-import { View, Text, TextInput, ScrollView, Image, TouchableOpacity } from 'react-native'
+import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { Redirect, router, useNavigation } from 'expo-router';
+
+import { firestore, auth } from '../../firebaseConfig';
 
 import { images } from '../../constants'
 
 const SignIn = () => {
+  const navigation = useNavigation()
 
   const [rfidNo, setRfidNo] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSignIn = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      // Firebase sign-in logic
+      await auth.signInWithEmailAndPassword(rfidNo + '@example.com', password); // Using RFID No as email
+      const userRef = firestore.collection('Users').doc(rfidNo); // Get user document by RFID No.
+      const userDoc = await userRef.get();
+      
+      if (userDoc.exists) {
+        const userData = userDoc.data();
+        if (userData.Role === 'teacher') {
+          router.replace('(teacher)/(tabs)/grades')
+        } else if (userData.Role === 'student') {
+          router.replace('(student)/(tabs)/attendance-history')
+        } else {
+          setError('Unknown role');
+          Alert.alert("Error", "Unknown role");
+        }
+      } else {
+        setError('User not found');
+        Alert.alert("Error", "User not found in the system.");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Failed to sign in. Please check your credentials.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView className="h-full">
@@ -28,7 +65,7 @@ const SignIn = () => {
             <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-primary items-center flex-row">
               <TextInput
                 value={rfidNo}
-                onChangeText={setRfidNo}
+                onChangeText={(text) => setRfidNo(text.toUpperCase())}
                 placeholder="Enter RFID No."
                 className="flex-1 text-secondary font-psemibold text-base"
               />
@@ -56,9 +93,14 @@ const SignIn = () => {
           </View>
           <TouchableOpacity 
             className="bg-secondary rounded-xl min-h-[62px] justify-center items-center w-full mt-7"
-            onPress={() => {}}
+            onPress={handleSignIn}
+            disabled={loading}
           >
-            <Text className="text-white font-psemibold text-lg">Sign In</Text>
+            {loading ? (
+              <ActivityIndicator size="small" color="#fff" /> 
+            ) : (
+              <Text className="text-white font-psemibold text-lg">Sign In</Text>
+            )}
           </TouchableOpacity>
         </View>
       </ScrollView>

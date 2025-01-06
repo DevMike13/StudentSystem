@@ -1,9 +1,30 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Tabs, Redirect } from 'expo-router';
+import { View, Text, Alert, BackHandler } from 'react-native'
+import React, { useEffect } from 'react'
+import { Tabs, Redirect, Stack } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 const TeacherLayout = () => {
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Exit App', 'Are you sure you want to exit?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        { text: 'Yes', onPress: () => BackHandler.exitApp() },
+      ]);
+      return true;
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+    };
+  }, []);
+
   return (
     <>
       <Tabs
@@ -11,7 +32,7 @@ const TeacherLayout = () => {
           tabBarStyle:{
            borderTopWidth: 2,
            borderTopColor: 'white',
-           height: 70
+           height: 70,
           }
         }}
       >
@@ -69,6 +90,26 @@ const TeacherLayout = () => {
              tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={`${focused ? 'body' : "body-outline"}`}
+                size={28}
+                color={focused ? 'blue' : 'gray'}
+              />
+             ),
+          }}
+        />
+        <Tabs.Screen name="(tabs)/register" 
+          options={{
+             title: 'Registration',
+             headerShown: false,
+             tabBarLabel: ({ focused }) => (
+              <Text
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-xs`}
+              >
+                Registration
+              </Text>
+            ),
+             tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={`${focused ? 'person-add' : "person-add-outline"}`}
                 size={28}
                 color={focused ? 'blue' : 'gray'}
               />
