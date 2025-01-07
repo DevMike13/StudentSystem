@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router, useNavigation } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { firestore, auth } from '../../firebaseConfig';
 
@@ -29,6 +30,8 @@ const SignIn = () => {
       
       if (userDoc.exists) {
         const userData = userDoc.data();
+        await AsyncStorage.setItem('user', JSON.stringify(userData));
+        
         if (userData.Role === 'teacher') {
           router.replace('(teacher)/(tabs)/grades')
         } else if (userData.Role === 'student') {

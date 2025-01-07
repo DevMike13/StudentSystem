@@ -1,6 +1,7 @@
 import { View, Text, TextInput, ScrollView, Image, TouchableOpacity, Alert, ActivityIndicator } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { SelectList } from 'react-native-dropdown-select-list'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/compat/auth';
@@ -34,7 +35,22 @@ const Register = () => {
     const [guardianMobileNo, setGuardianMobileNo] = useState('+63');
     const [guardianAddress, setGuardianAddress] = useState('');
 
+    const [course, setCourse] = useState('STEM');
+    const [section, setSection] = useState('');
+
     const [loading, setLoading] = useState(false);
+
+    const sections = [
+      {key:'1', value:'STEM A'},
+      {key:'2', value:'STEM B'},
+      {key:'3', value:'STEM C'},
+      {key:'4', value:'STEM D'},
+      {key:'5', value:'STEM E'},
+      {key:'6', value:'STEM F'},
+      {key:'7', value:'STEM G'},
+      {key:'8', value:'STEM H'},
+    ]
+
     const handleChangeText = (text) => {
         if (!text.startsWith('+63')) {
           text = '+63';
@@ -80,7 +96,9 @@ const Register = () => {
           !guardianFirstname ||
           !guardianLastname ||
           !guardianMobileNo ||
-          !guardianAddress
+          !guardianAddress ||
+          !course ||
+          !section
         ) {
           Alert.alert('Error', 'All fields are required!');
           return;
@@ -118,6 +136,8 @@ const Register = () => {
             GuardianLastName: guardianLastname,
             GuardianMobileNo: guardianMobileNo,
             GuardianAddress: guardianAddress,
+            Course: course,
+            Section: section,
             Role: "student"
           });
     
@@ -360,7 +380,37 @@ const Register = () => {
             </View>
 
           </View>
+        
+          <View className="border-2 border-secondary border-dashed w-full h-auto px-4 py-5 items-center relative mt-7">
+            <Text className="absolute -top-4 font-psemibold text-xl bg-secondary rounded-lg text-white">{"  "}Student Course Info{"  "}</Text>
+            <View className="space-y-2 mt-3">
+              <Text className="text-base text-secondary font-pmedium">Course</Text>
+              <View className="w-full h-16 px-4 border-2 border-secondary rounded-2xl focus:border-primary items-center flex-row">
+                <TextInput
+                  value={course}
+                  onChangeText={setCourse}
+                  placeholder="Enter Course"
+                  editable={false}
+                  className="flex-1 text-secondary font-psemibold text-base"
+                />
+              </View>
+            </View>
 
+            <View className="space-y-2 mt-7 w-full">
+              <Text className="text-base text-secondary font-pmedium mb-2">Confirm Temporary Password</Text>
+                <SelectList 
+                  setSelected={(val) => setSection(val)} 
+                  data={sections} 
+                  save="value"
+                  fontFamily='font-pmedium'
+                  search={false}
+                  boxStyles={{ width: '100%', borderWidth: 2, borderColor: 'black', height: 60, borderRadius: 15  }}
+                  dropdownStyles={{ width: '100%' }}
+                  dropdownItemStyles={{ width: '100%' }}
+                  inputStyles={{ justifyContent: 'center', alignItems: 'center', paddingTop: 5 }}
+                />
+            </View>
+          </View>
           
           <View className="border-2 border-secondary border-dashed w-full px-4 py-5 items-center relative mt-7">
             <Text className="absolute -top-4 font-psemibold text-xl bg-secondary rounded-lg text-white">{"  "}Student Credentials{"  "}</Text>

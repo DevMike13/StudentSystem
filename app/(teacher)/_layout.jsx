@@ -42,7 +42,7 @@ const TeacherLayout = () => {
              headerShown: false,
              tabBarLabel: ({ focused }) => (
               <Text
-                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-xs`}
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-[11px]`}
               >
                 Grades
               </Text>
@@ -50,7 +50,7 @@ const TeacherLayout = () => {
              tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={`${focused ? 'ribbon' : "ribbon-outline"}`}
-                size={28}
+                size={25}
                 color={focused ? 'blue' : 'gray'}
               />
              ),
@@ -62,7 +62,7 @@ const TeacherLayout = () => {
              headerShown: false,
              tabBarLabel: ({ focused }) => (
               <Text
-                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-xs`}
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-[11px]`}
               >
                 Attendance
               </Text>
@@ -70,7 +70,7 @@ const TeacherLayout = () => {
              tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={`${focused ? 'timer' : "timer-outline"}`}
-                size={28}
+                size={25}
                 color={focused ? 'blue' : 'gray'}
               />
              ),
@@ -82,7 +82,7 @@ const TeacherLayout = () => {
              headerShown: false,
              tabBarLabel: ({ focused }) => (
               <Text
-                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-xs`}
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-[11px]`}
               >
                 Student Info
               </Text>
@@ -90,7 +90,7 @@ const TeacherLayout = () => {
              tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={`${focused ? 'body' : "body-outline"}`}
-                size={28}
+                size={25}
                 color={focused ? 'blue' : 'gray'}
               />
              ),
@@ -102,7 +102,7 @@ const TeacherLayout = () => {
              headerShown: false,
              tabBarLabel: ({ focused }) => (
               <Text
-                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-xs`}
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-[11px]`}
               >
                 Registration
               </Text>
@@ -110,7 +110,27 @@ const TeacherLayout = () => {
              tabBarIcon: ({ focused }) => (
               <Ionicons
                 name={`${focused ? 'person-add' : "person-add-outline"}`}
-                size={28}
+                size={25}
+                color={focused ? 'blue' : 'gray'}
+              />
+             ),
+          }}
+        />
+        <Tabs.Screen name="(tabs)/profile" 
+          options={{
+             title: 'Profile',
+             headerShown: false,
+             tabBarLabel: ({ focused }) => (
+              <Text
+                className={`${focused ? 'font-pbold text-blue-700' : 'font-pregular text-gray-400'} text-[11px]`}
+              >
+                Profile
+              </Text>
+            ),
+             tabBarIcon: ({ focused }) => (
+              <Ionicons
+                name={`${focused ? 'person-circle' : "person-circle-outline"}`}
+                size={25}
                 color={focused ? 'blue' : 'gray'}
               />
              ),

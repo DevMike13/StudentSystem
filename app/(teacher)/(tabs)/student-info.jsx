@@ -7,6 +7,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { images } from '../../../constants'
 
+const sectionList = ['STEM A', 'STEM B', 'STEM C', 'STEM D', 'STEM E', 'STEM F', 'STEM G', 'STEM H'];
+
 const StudentInfo = () => {
 
   const [students, setStudents] = useState([]);
@@ -14,6 +16,68 @@ const StudentInfo = () => {
   const [error, setError] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState(sectionList[0]);
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'STEM A':
+        return (
+          <ScrollView>
+            <View className="w-full h-full">
+            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
+            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
+            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
+            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
+            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
+            </View>
+          </ScrollView>
+        );
+      case 'STEM B':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      case 'STEM C':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      case 'STEM D':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      case 'STEM E':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        ); 
+      case 'STEM F':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      case 'STEM G':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      case 'STEM H':
+        return (
+          <ScrollView>
+            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
+          </ScrollView>
+        );
+      default:
+        return null;
+    }
+  };
 
   const openModal = (student) => {
     setSelectedStudent(student);
@@ -28,42 +92,31 @@ const StudentInfo = () => {
   useEffect(() => {
     const fetchStudents = async () => {
       try {
+        setLoading(true); // Show loading indicator while fetching data
         const usersRef = collection(firestore, 'Users');
-        const q = query(usersRef, where('Role', '==', 'student'));
+        const q = query(
+          usersRef,
+          where('Role', '==', 'student'),
+          where('Section', '==', activeTab) // Query based on selected section
+        );
+  
         const querySnapshot = await getDocs(q);
-        
-        const studentsData = querySnapshot.docs.map(doc => ({
-          id: doc.id, 
-          ...doc.data()
+        const studentsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
         }));
-
+  
         setStudents(studentsData);
       } catch (error) {
         setError('Error fetching students');
         console.error(error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Hide loading indicator after fetching data
       }
     };
-
+  
     fetchStudents();
-  }, []);
-
-  if (loading) {
-    return (
-      <View>
-        <ActivityIndicator size="large" color="blue" />
-      </View>
-    );
-  }
-
-  if (error) {
-    return (
-      <View>
-        <Text>{error}</Text>
-      </View>
-    );
-  }
+  }, [activeTab]);
 
   const profileImages = [
     'https://images.pexels.com/photos/261895/pexels-photo-261895.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -97,48 +150,76 @@ const StudentInfo = () => {
             resizeMode='contain'
           />
         </View>
+        <View className="w-full h-auto mb-4 bg-primary rounded-full p-2">
+          <FlatList
+            data={sectionList}
+            horizontal={true} // Enable horizontal scrolling
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                onPress={() => setActiveTab(item)}
+                className={`py-2 px-6 w-auto rounded-full mr-1 ${activeTab === item ? 'bg-secondary' : 'bg-gray-300'}`}
+              >
+                <Text className={`text-lg font-psemibold text-center ${activeTab === item ? 'text-white' : 'text-gray-500'}`}>
+                  {item}
+                </Text>
+              </TouchableOpacity>
+            )}
+            showsHorizontalScrollIndicator={false}
+            className="rounded-full"
+          />
+        </View>
         
-        <FlatList
-          data={students}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            // Pick a random image from the profileImages array
-            const randomImage = profileImages[Math.floor(Math.random() * profileImages.length)];
-    
-            return (
-              <View className="mb-5 rounded-xl border-2 border-primary flex-row justify-center items-center pr-5">
-                <View className="w-full flex flex-row items-center justify-center gap-3 px-4 py-2">
-                  <Image
-                    source={{ uri: randomImage }}
-                    className="w-14 h-14 rounded-full"
-                  />
-                  <View>
-                    <Text className="font-psemibold text-sm text-secondary">Name: <Text className="text-gray-500">{item.LastName}, {item.FirstName}</Text></Text>
-                    <Text className="font-psemibold text-sm text-secondary">RFID No: <Text className="text-gray-500">{item.RFIDNo}</Text></Text>
-                    <Text className="font-psemibold text-sm text-secondary">Guardian No: <Text className="text-gray-500">{item.MobileNo}</Text></Text>
-                  </View>
-                  
-                </View>
-                <View className="flex flex-col gap-2 px-1 justify-center items-center">
-                    <TouchableOpacity onPress={() => openModal(item)}>
-                      <Ionicons
-                        name="newspaper-outline"
-                        size={28}
-                        color='blue' 
+        {
+          loading ? (
+            <View className="w-full min-h-[69vh]">
+              <ActivityIndicator size="large" color="blue" />
+            </View>
+          ) : (
+            <FlatList
+              data={students}
+              keyExtractor={(item) => item.id}
+              renderItem={({ item }) => {
+                // Pick a random image from the profileImages array
+                const randomImage = profileImages[Math.floor(Math.random() * profileImages.length)];
+        
+                return (
+                  <View className="mb-5 rounded-xl border-2 border-primary flex-row justify-center items-center pr-5">
+                    <View className="w-full flex flex-row items-center justify-center gap-3 px-4 py-2">
+                      <Image
+                        source={{ uri: randomImage }}
+                        className="w-14 h-14 rounded-full"
                       />
-                    </TouchableOpacity>
-                    <TouchableOpacity>
-                      <Ionicons
-                        name="trash-outline"
-                        size={28}
-                        color='red' 
-                      />
-                    </TouchableOpacity>
+                      <View>
+                        <Text className="font-psemibold text-sm text-secondary">Name: <Text className="text-gray-500">{item.LastName}, {item.FirstName}</Text></Text>
+                        <Text className="font-psemibold text-sm text-secondary">RFID No: <Text className="text-gray-500">{item.RFIDNo}</Text></Text>
+                        <Text className="font-psemibold text-sm text-secondary">Guardian No: <Text className="text-gray-500">{item.MobileNo}</Text></Text>
+                      </View>
+                      
+                    </View>
+                    <View className="flex flex-col gap-2 px-1 justify-center items-center">
+                        <TouchableOpacity onPress={() => openModal(item)}>
+                          <Ionicons
+                            name="newspaper-outline"
+                            size={28}
+                            color='blue' 
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                          <Ionicons
+                            name="trash-outline"
+                            size={28}
+                            color='red' 
+                          />
+                        </TouchableOpacity>
+                      </View>
                   </View>
-              </View>
-            );
-          }}
-        />
+                );
+              }}
+            />
+          )
+        }
+        
         {/* Modal to display student details */}
         <Modal
           visible={isModalVisible}
