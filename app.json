@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "StudentSystem",
-    "slug": "StudentSystem",
-    "scheme": "studentsystem",
+    "name": "Present!",
+    "slug": "present",
+    "scheme": "present",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,13 +20,19 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.hymike.present"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "5dd2f603-e3b9-4591-9c49-e7465da95d9b"
+      }
+    }
   }
 }
