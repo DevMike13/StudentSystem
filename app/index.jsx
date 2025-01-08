@@ -1,13 +1,55 @@
 import { StatusBar } from 'expo-status-bar';
-import { ScrollView, Text, View, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, Text, View, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { Redirect, router } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useEffect, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { images } from '../constants'
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+  const [userRole, setUserRole] = useState(null);
+
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        const user = await AsyncStorage.getItem('user');
+        if (user) {
+          const { Role } = JSON.parse(user);
+          setUserRole(Role);
+        }
+      } catch (error) {
+        console.error('Failed to load user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkUser();
+  }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      if (userRole === 'student') {
+        router.replace('(student)/(tabs)/attendance-history');
+      } else if (userRole === 'teacher') {
+        router.replace('(teacher)/(tabs)/grades');
+      }
+    }
+  }, [loading, userRole]);
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView className="bg-primary h-full">
+      <StatusBar style="light" />
       <ScrollView contentContainerStyle={{
         height: '100%'
       }}>

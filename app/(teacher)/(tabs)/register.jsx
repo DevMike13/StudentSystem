@@ -5,6 +5,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router } from 'expo-router';
 import { createUserWithEmailAndPassword } from 'firebase/compat/auth';
+import { StatusBar } from 'expo-status-bar';
 
 import { firestore, auth } from '../../../firebaseConfig';
 import { Picker } from '@react-native-picker/picker';
@@ -168,6 +169,7 @@ const Register = () => {
       };
   return (
     <SafeAreaView className="h-full">
+      <StatusBar style="dark" />
       <ScrollView>
         <View className="w-full min-h-[85vh] justify-center px-4 my-6">
           <View className="w-full items-center mb-5">
@@ -397,9 +399,10 @@ const Register = () => {
             </View>
 
             <View className="space-y-2 mt-7 w-full">
-              <Text className="text-base text-secondary font-pmedium mb-2">Confirm Temporary Password</Text>
+              <Text className="text-base text-secondary font-pmedium mb-2">Section</Text>
                 <SelectList 
                   setSelected={(val) => setSection(val)} 
+                  placeholder="Select Section"
                   data={sections} 
                   save="value"
                   fontFamily='font-pmedium'

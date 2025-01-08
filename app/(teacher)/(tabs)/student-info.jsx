@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { firestore } from '../../../firebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
 
 import { images } from '../../../constants'
 
@@ -141,6 +142,7 @@ const StudentInfo = () => {
  
   return (
     <SafeAreaView className="h-full">
+      <StatusBar style="dark" />
       <View className="w-full min-h-[85vh] justify-center px-4 my-6">
         <View className="items-center flex-row justify-center gap-5 mb-5">
           <Text className="w-auto font-pbold text-2xl">Student Info</Text>

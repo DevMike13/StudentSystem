@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Redirect, router, useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StatusBar } from 'expo-status-bar';
 
 import { firestore, auth } from '../../firebaseConfig';
 
@@ -53,6 +54,7 @@ const SignIn = () => {
 
   return (
     <SafeAreaView className="h-full">
+      <StatusBar style="dark" />
       <ScrollView>
         <View className="w-full min-h-[85vh] justify-center px-4 my-6">
           <View className="w-full items-center">

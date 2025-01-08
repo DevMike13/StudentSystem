@@ -2,6 +2,9 @@ import { View, Text, Alert, ActivityIndicator, TouchableOpacity } from 'react-na
 import React, { useEffect, useState } from 'react';
 import { Redirect, router, useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -13,8 +16,7 @@ const Profile = () => {
         const userDataString = await AsyncStorage.getItem('user');
         if (userDataString !== null) {
           const parsedUserData = JSON.parse(userDataString);
-          setUserData(parsedUserData);
-          console.log(parsedUserData)
+          setUserData(parsedUserData); 
         } else {
           Alert.alert('No data', 'No user data found.');
         }
@@ -55,22 +57,33 @@ const Profile = () => {
   }
 
   return (
-    <View className="flex-1 p-5">
-      <Text className="text-3xl font-bold text-center mb-4">Profile</Text>
+    <SafeAreaView className="flex-1 p-5">
+      <StatusBar style="dark" />
+      <Text className="text-3xl font-pbold text-center mb-4">Profile</Text>
+      <View className="w-full flex justify-center items-center text-center">
+        <View className="w-fit h-fit">
+          <Ionicons
+            name="person-circle-outline"
+            size={120}
+            color='gray' 
+          />
+        </View>
+      </View>
       <View className="space-y-2">
-        <Text className="text-lg font-semibold">Name: <Text className="text-gray-700">{userData.name}</Text></Text>
-        <Text className="text-lg font-semibold">Email: <Text className="text-gray-700">{userData.email}</Text></Text>
-        <Text className="text-lg font-semibold">Role: <Text className="text-gray-700">{userData.Role}</Text></Text>
+        <Text className="text-lg font-psemibold text-secondary">Name: <Text className="text-gray-500">{userData.LastName}, {userData.FirstName}</Text></Text>
+        <Text className="text-lg font-psemibold text-secondary">Username: <Text className="text-gray-500">{userData.RFIDNo}</Text></Text>
+        <Text className="text-lg font-psemibold text-secondary">Mobile No.: <Text className="text-gray-500">{userData.MobileNo}</Text></Text>
+        <Text className="text-lg font-psemibold text-secondary">Role: <Text className="text-gray-500 capitalize">{userData.Role}</Text></Text>
       </View>
       <View className="mt-5">
         <TouchableOpacity 
           onPress={logout}
-          className="bg-red-500 rounded-md py-2 px-4 justify-center items-center"
+          className="bg-red-500 rounded-full py-2 px-4 justify-center items-center"
         >
-          <Text className="text-white text-lg">Logout</Text>
+          <Text className="text-white text-lg font-pmedium">Logout</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

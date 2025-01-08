@@ -5,6 +5,7 @@ import { firestore } from '../../../firebaseConfig';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Toast from 'react-native-toast-message';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
 
 import { images } from '../../../constants'
 
@@ -276,6 +277,7 @@ const Grades = () => {
 
   return (
     <SafeAreaView className="h-full">
+      <StatusBar style="dark" />
       <View className="p-6">
         <View className="w-full h-auto mb-4 bg-primary rounded-full p-2">
           <FlatList
