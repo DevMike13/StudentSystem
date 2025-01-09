@@ -278,7 +278,15 @@ const Grades = () => {
   return (
     <SafeAreaView className="h-full">
       <StatusBar style="dark" />
-      <View className="p-6">
+      <View className="w-full min-h-[85vh] justify-center px-4 my-6">
+        <View className="items-center flex-row justify-center gap-5 mb-5">
+          <Text className="w-auto font-pbold text-2xl">Student Grades</Text>
+          <Image 
+            source={images.logo}
+            className="w-10 h-10"
+            resizeMode='contain'
+          />
+        </View>
         <View className="w-full h-auto mb-4 bg-primary rounded-full p-2">
           <FlatList
             data={sectionList}

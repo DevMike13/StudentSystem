@@ -6,6 +6,7 @@ import Toast from 'react-native-toast-message';
 import { firestore, firebase } from '../../../firebaseConfig';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 const StudentProfile = () => {
   const [userData, setUserData] = useState(null);

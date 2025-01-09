@@ -6,6 +6,7 @@ import { collection, query, where, getDocs } from 'firebase/firestore';
 import Toast from 'react-native-toast-message';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { StatusBar } from 'expo-status-bar';
 
 import { images } from '../../../constants'
 
@@ -85,7 +86,7 @@ const Grades = () => {
   }
 
   return (
-    <View className="flex-1 p-4">
+    <SafeAreaView className="flex-1 px-4 pb-4">
       <View className="flex-row justify-center items-center">
         <Text className="text-xl font-pbold mb-4 flex-1 mt-4">Grades</Text>
         <View>
@@ -147,7 +148,7 @@ const Grades = () => {
         )
       }
       
-    </View>
+    </SafeAreaView>
   )
 }
 

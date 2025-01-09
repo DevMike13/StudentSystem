@@ -19,67 +19,6 @@ const StudentInfo = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [activeTab, setActiveTab] = useState(sectionList[0]);
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'STEM A':
-        return (
-          <ScrollView>
-            <View className="w-full h-full">
-            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
-            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
-            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
-            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
-            <Text className="text-xl text-gray-800">This is Tab 1 content</Text>
-            </View>
-          </ScrollView>
-        );
-      case 'STEM B':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      case 'STEM C':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      case 'STEM D':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      case 'STEM E':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        ); 
-      case 'STEM F':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      case 'STEM G':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      case 'STEM H':
-        return (
-          <ScrollView>
-            <Text className="text-xl text-gray-800">This is Tab 2 content</Text>
-          </ScrollView>
-        );
-      default:
-        return null;
-    }
-  };
-
   const openModal = (student) => {
     setSelectedStudent(student);
     setIsModalVisible(true);
@@ -207,13 +146,13 @@ const StudentInfo = () => {
                             color='blue' 
                           />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        {/* <TouchableOpacity>
                           <Ionicons
                             name="trash-outline"
                             size={28}
                             color='red' 
                           />
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                       </View>
                   </View>
                 );
